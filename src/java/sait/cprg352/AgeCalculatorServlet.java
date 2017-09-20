@@ -31,13 +31,23 @@ public class AgeCalculatorServlet extends HttpServlet {
         
         String curage = request.getParameter("curage");
         request.setAttribute("currentage", curage);
-       
+        try
+        {
         if(curage == null || curage.isEmpty())
         {
             request.setAttribute("errorMessage","You must give your current age.");
            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculator.jsp").forward(request, response);
         }
-        
+        else
+        {
+            request.setAttribute("errorMessage","Your age next birthday "+(Integer.parseInt(curage)+1));
+            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculator.jsp").forward(request, response);
+        }
+        }
+        catch(Exception e){
+            request.setAttribute("errorMessage","Inavlid input");
+            getServletContext().getRequestDispatcher("/WEB-INF/ageCalculator.jsp").forward(request, response);
+        }
     }
 
 }
